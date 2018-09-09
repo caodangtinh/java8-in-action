@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class ListApple {
     public static void main(String[] args) {
@@ -18,6 +19,11 @@ public class ListApple {
         filterApple(inventory, (Apple a) -> a.getWeight() > 150);
 
         filterApple(inventory, (Apple a) -> a.getWeight() < 80 || "brown".equals(a.getColor()));
+        inventory.stream()
+                .filter(ListApple::isGreenApple)
+                .collect(Collectors.toList());
+        inventory.parallelStream().filter(ListApple::isGreenApple)
+                .collect(Collectors.toList());
     }
 
     // before java 8
