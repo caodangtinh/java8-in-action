@@ -24,6 +24,11 @@ public class ListApple {
                 .collect(Collectors.toList());
         inventory.parallelStream().filter(ListApple::isGreenApple)
                 .collect(Collectors.toList());
+        List<Apple> appleList = filter(inventory, new GreenApplePredicate());
+        List<Apple> filter = filter(inventory, new HeavyApplePredicate());
+        List<Apple> apples = filter(inventory, new GreenAndHeavyApplePredicate());
+        printApple(inventory, new PrintAppleWithWeightPredicate());
+        printApple(inventory, new PrintWeightApplePredicate());
     }
 
     // before java 8
@@ -65,6 +70,35 @@ public class ListApple {
             }
         }
         return filterApple;
+    }
+
+    // before java 8
+    public static List<Apple> filterByColor(List<Apple> appleList, String color) {
+        List<Apple> greenApple = new ArrayList<>();
+        for (Apple apple : appleList) {
+            if (color.equals(apple.getColor())) {
+                greenApple.add(apple);
+            }
+        }
+        return greenApple;
+    }
+
+
+    // java 8 behavior parameterization
+    public static List<Apple> filter(List<Apple> appleList, ApplePredicate<Apple> applePredicate) {
+        List<Apple> greenApple = new ArrayList<>();
+        for (Apple apple : appleList) {
+            if (applePredicate.test(apple)) {
+                greenApple.add(apple);
+            }
+        }
+        return greenApple;
+    }
+
+    public static void printApple(List<Apple> appleList, PrintApplePredicate<Apple> applePredicate) {
+        for (Apple apple : appleList) {
+            applePredicate.print(apple);
+        }
     }
 
 
