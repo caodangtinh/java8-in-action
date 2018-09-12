@@ -2,6 +2,7 @@ package chapter1;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -29,6 +30,17 @@ public class ListApple {
         List<Apple> apples = filter(inventory, new GreenAndHeavyApplePredicate());
         printApple(inventory, new PrintAppleWithWeightPredicate());
         printApple(inventory, new PrintWeightApplePredicate());
+
+        // before java 8
+        inventory.sort(new Comparator<Apple>() {
+            @Override
+            public int compare(Apple o1, Apple o2) {
+                return o1.getWeight().compareTo(o2.getWeight());
+            }
+        });
+
+        // java 8
+        inventory.sort((Apple o1, Apple o2) -> o1.getWeight().compareTo(o2.getWeight()));
     }
 
     // before java 8
@@ -82,7 +94,6 @@ public class ListApple {
         }
         return greenApple;
     }
-
 
     // java 8 behavior parameterization
     public static List<Apple> filter(List<Apple> appleList, ApplePredicate<Apple> applePredicate) {
