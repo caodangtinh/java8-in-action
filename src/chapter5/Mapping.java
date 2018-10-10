@@ -11,5 +11,10 @@ public class Mapping {
         List<Dish> allMenus = MenuUtils.getAllMenus();
         List<String> collect = allMenus.stream().map(Dish::getName).collect(Collectors.toList());
         collect.forEach(System.out::println);
+        List<Integer> integerList = allMenus.stream()
+                .map(Dish::getName)
+                .map(String::length)
+                .collect(Collectors.toList());
+        integerList.forEach(System.out::println);
     }
 }
